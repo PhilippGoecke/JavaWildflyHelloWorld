@@ -2,10 +2,6 @@ FROM debian:trixie-slim as install
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-#SHELL ["/bin/bash", "-c"]
-RUN rm /bin/sh \
-  && ln -s /bin/bash /bin/sh
-
 # install dependencies
 RUN apt update && apt upgrade -y \
   && apt install -y --no-install-recommends --no-install-suggests openjdk-21-jdk-headless wget \
