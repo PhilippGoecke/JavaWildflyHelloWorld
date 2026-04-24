@@ -24,7 +24,7 @@ RUN mkdir -p /opt/jboss \
   && rm wildfly.tar.gz
 
 RUN mkdir -p $JBOSS_HOME/standalone/deployments/hello.war
-COPY --chown=rails <<'EOF' $JBOSS_HOME/standalone/deployments/hello.war/index.jsp
+COPY <<'EOF' $JBOSS_HOME/standalone/deployments/hello.war/index.jsp
 <%@ page language="java" %>
 <%
     String name = request.getParameter("name");
