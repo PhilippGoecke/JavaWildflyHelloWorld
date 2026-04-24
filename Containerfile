@@ -23,7 +23,7 @@ RUN mkdir -p /opt/jboss \
   && mv wildfly-preview-39.0.1.Final wildfly \
   && rm wildfly.tar.gz
 
-RUN mkdir -p $JBOSS_HOME/standalone/deployments \
+RUN mkdir -p $JBOSS_HOME/standalone/deployments/hello.war \
   && cat > $JBOSS_HOME/standalone/deployments/hello.war/index.jsp << 'EOF'
 <%@ page language="java" %>
 <%
