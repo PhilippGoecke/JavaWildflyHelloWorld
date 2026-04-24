@@ -1,20 +1,29 @@
-FROM debian:trixie
+FROM debian:trixie-slim as install
 
-RUN apt-get update && apt-get install -y \
-    openjdk-21-jdk-headless \
-    wget \
-    && rm -rf /var/lib/apt/lists/*
+ARG DEBIAN_FRONTEND=noninteractive
+
+#SHELL ["/bin/bash", "-c"]
+RUN rm /bin/sh \
+  && ln -s /bin/bash /bin/sh
+
+# install dependencies
+RUN apt update && apt upgrade -y \
+  && apt install -y --no-install-recommends --no-install-suggests openjdk-21-jdk-headless wget \
+  && rm -rf "/var/lib/apt/lists/*" \
+  && rm -rf /var/cache/apt/archives
 
 ENV JBOSS_HOME=/opt/jboss/wildfly
 ENV PATH=$JBOSS_HOME/bin:$PATH
 
-RUN mkdir -p /opt/jboss && \
-    cd /opt/jboss && \
-    wget https://github.com/wildfly/wildfly/releases/download/33.0.0.Final/wildfly-33.0.0.Final.tar.gz && \
-    tar xzf wildfly-33.0.0.Final.tar.gz && \
-    mv wildfly-33.0.0.Final wildfly && \
-    rm wildfly-33.0.0.Final.tar.gz
+RUN mkdir -p /opt/jboss \
+  && cd /opt/jboss \
+  && wget https://github.com/wildfly/wildfly/releases/download/33.0.0.Final/wildfly-33.0.0.Final.tar.gz -O wildfly.tar.gz \
+  && tar xzf wildfly.tar.gz \
+  && mv wildfly-33.0.0.Final wildfly \
+  && rm wildfly.tar.gz
 
 EXPOSE 8080 9990
 
 CMD ["standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 CMD jcmd wildfly.jar help || exit 1
