@@ -17,9 +17,10 @@ ENV PATH=$JBOSS_HOME/bin:$PATH
 
 RUN mkdir -p /opt/jboss \
   && cd /opt/jboss \
-  && wget https://github.com/wildfly/wildfly/releases/download/33.0.0.Final/wildfly-33.0.0.Final.tar.gz -O wildfly.tar.gz \
+  && wget https://github.com/wildfly/wildfly/releases/download/39.0.1.Final/wildfly-preview-39.0.1.Final.tar.gz -O wildfly.tar.gz \
+  && echo "8a204ebcba28267bd3603095334d4a02e7db83b4  wildfly.tar.gz" | sha1sum -c - \
   && tar xzf wildfly.tar.gz \
-  && mv wildfly-33.0.0.Final wildfly \
+  && mv wildfly-preview-39.0.1.Final wildfly \
   && rm wildfly.tar.gz
 
 EXPOSE 8080 9990
