@@ -23,6 +23,18 @@ RUN mkdir -p /opt/jboss \
   && mv wildfly-preview-39.0.1.Final wildfly \
   && rm wildfly.tar.gz
 
+RUN mkdir -p $JBOSS_HOME/standalone/deployments \
+  && cat > $JBOSS_HOME/standalone/deployments/hello.war/index.jsp << 'EOF'
+<%@ page language="java" %>
+<%
+    String name = request.getParameter("name");
+    if (name == null || name.isEmpty()) {
+        name = "World";
+    }
+%>
+Hello <%= name %>
+EOF
+
 EXPOSE 8080 9990
 
 CMD ["standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
