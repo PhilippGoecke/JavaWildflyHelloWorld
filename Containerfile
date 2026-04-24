@@ -20,7 +20,7 @@ RUN mkdir -p /opt/jboss \
   && rm wildfly.tar.gz
 
 RUN mkdir -p $JBOSS_HOME/standalone/deployments/hello.war/WEB-INF
-COPY <<'EOF' $JBOSS_HOME/standalone/deployments/hello.war/WEB-INF/web.xml << 'EOF'
+COPY <<'EOF' $JBOSS_HOME/standalone/deployments/hello.war/WEB-INF/web.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="4.0">
 </web-app>
