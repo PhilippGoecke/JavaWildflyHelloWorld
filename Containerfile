@@ -35,6 +35,17 @@ COPY <<'EOF' $JBOSS_HOME/standalone/deployments/hello.war/index.jsp
 %>
 Hello <%= name %>
 EOF
+COPY <<'EOF' $JBOSS_HOME/standalone/deployments/hello.war/index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello</title>
+</head>
+<body>
+    <h1>Hello World</h1>
+</body>
+</html>
+EOF
 
 EXPOSE 8080 9990
 
