@@ -23,8 +23,8 @@ RUN mkdir -p /opt/jboss \
   && mv wildfly-preview-39.0.1.Final wildfly \
   && rm wildfly.tar.gz
 
-RUN mkdir -p $JBOSS_HOME/standalone/deployments/hello.war \
-  && cat > $JBOSS_HOME/standalone/deployments/hello.war/index.jsp << 'EOF'
+RUN mkdir -p $JBOSS_HOME/standalone/deployments/hello.war
+COPY --chown=rails <<'EOF' $JBOSS_HOME/standalone/deployments/hello.war/index.jsp
 <%@ page language="java" %>
 <%
     String name = request.getParameter("name");
